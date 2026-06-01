@@ -1,63 +1,53 @@
-```html
-## Demo - Vision-Based Robotic Grasping
-
-OpenMANIPULATOR-X와 Depth Camera를 활용하여 물체를 인식하고, MoveIt 기반으로 로봇팔이 물체를 잡아 들어 올리는 시연 영상입니다.
-
-<p align="center">
-  <a href="https://youtu.be/ki21uMB1o9U">
-    <img src="https://img.youtube.com/vi/ki21uMB1o9U/hqdefault.jpg" width="900" alt="Vision-Based Robotic Grasping Demo">
-  </a>
-</p>
-
-<p align="center">
-  <b>Click the thumbnail to watch the demonstration video.</b>
-</p>
-
----
-```
-
-
 # Mine Clearing Robot Vision Grasp
 
 OpenMANIPULATOR-X 로봇팔과 Orbbec/Astra depth camera를 이용해서 원기둥 형태의 물체, 예를 들어 종이컵 같은 물체를 인식하고 MoveIt 기반으로 집는 ROS 2 Humble 프로젝트입니다.
 
 현재 프로젝트는 depth image로 물체 위치를 추정하고, `/pick_latest_target` 서비스를 호출하면 로봇팔이 물체를 잡은 뒤 지정된 자세로 들어 올리는 동작까지 수행합니다.
 
+## Demo (YouTube Shorts)
+
+<a href="https://youtu.be/ki21uMB1o9U">
+  <img src="https://img.youtube.com/vi/ki21uMB1o9U/hqdefault.jpg" width="900" alt="Mine Clearing Robot Vision Grasp Demo">
+</a>
+
+---
 
 ## 현재 동작 상태
 
-- Orbbec/Astra depth camera를 사용해서 물체 위치를 검출합니다.
-- `open_manipulator_vision_grasp` 패키지가 다음 topic을 publish합니다.
-  - `/vision/target_pose`
-  - `/vision/target_marker`
-  - `/vision/debug_image`
-- `/pick_latest_target` 서비스를 호출하면 현재 인식된 물체를 한 번 집습니다.
-- 통합 launch 하나로 hardware, MoveIt, camera, detector, grasp node를 같이 실행할 수 있습니다.
-- gripper는 너무 세게 닫히지 않도록 custom close position을 사용합니다.
-- gripper close가 물체 때문에 완전히 끝나지 않아도 timeout 이후 잡힌 것으로 간주하고 다음 동작으로 넘어갑니다.
-- 물체를 잡은 뒤 설정된 joint lift pose로 들어 올립니다.
-- 현재 카메라 보정값은 아래 기준입니다.
-  - `camera_y = -0.12`
-  - `camera_yaw = -1.57079632679`
+* Orbbec/Astra depth camera를 사용해서 물체 위치를 검출합니다.
+* `open_manipulator_vision_grasp` 패키지가 다음 topic을 publish합니다.
+
+  * `/vision/target_pose`
+  * `/vision/target_marker`
+  * `/vision/debug_image`
+* `/pick_latest_target` 서비스를 호출하면 현재 인식된 물체를 한 번 집습니다.
+* 통합 launch 하나로 hardware, MoveIt, camera, detector, grasp node를 같이 실행할 수 있습니다.
+* gripper는 너무 세게 닫히지 않도록 custom close position을 사용합니다.
+* gripper close가 물체 때문에 완전히 끝나지 않아도 timeout 이후 잡힌 것으로 간주하고 다음 동작으로 넘어갑니다.
+* 물체를 잡은 뒤 설정된 joint lift pose로 들어 올립니다.
+* 현재 카메라 보정값은 아래 기준입니다.
+
+  * `camera_y = -0.12`
+  * `camera_yaw = -1.57079632679`
 
 ## 환경세팅
 
-- Ubuntu 22.04
-- ROS 2 Humble
-- MoveIt 2
-- `ros2_control` 관련 패키지
-- OpenMANIPULATOR-X ROS 2 패키지
-- DynamixelSDK
-- Dynamixel hardware/interface 패키지
-- Orbbec `ros2_astra_camera`
-- Orbbec camera용 udev rule
-- U2D2/OpenMANIPULATOR-X용 udev rule
+* Ubuntu 22.04
+* ROS 2 Humble
+* MoveIt 2
+* `ros2_control` 관련 패키지
+* OpenMANIPULATOR-X ROS 2 패키지
+* DynamixelSDK
+* Dynamixel hardware/interface 패키지
+* Orbbec `ros2_astra_camera`
+* Orbbec camera용 udev rule
+* U2D2/OpenMANIPULATOR-X용 udev rule
 
 참고 문서:
 
-- OpenMANIPULATOR-X Quick Start Guide: <https://emanual.robotis.com/docs/en/platform/openmanipulator_x/quick_start_guide/>
-- Orbbec ros2_astra_camera: <https://github.com/orbbec/ros2_astra_camera>
-- ROS 2 Humble Install: <https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html>
+* OpenMANIPULATOR-X Quick Start Guide: https://emanual.robotis.com/docs/en/platform/openmanipulator_x/quick_start_guide/
+* Orbbec ros2_astra_camera: https://github.com/orbbec/ros2_astra_camera
+* ROS 2 Humble Install: https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html
 
 ## 1. Workspace 생성 및 이 Repo Clone
 
@@ -187,9 +177,9 @@ ros2 launch open_manipulator_vision_grasp dabai_vision_grasp.launch.py \
 
 주의:
 
-- `camera_y`와 `camera_yaw`는 현재 세팅에 맞춰 기본값이 보정되어 있습니다.
-- 다시 calibration하는 상황이 아니면 `camera_y`, `camera_yaw`는 따로 넘기지 않습니다.
-- port가 다르면 `/dev/ttyACM0` 대신 실제 port를 넣어야 합니다.
+* `camera_y`와 `camera_yaw`는 현재 세팅에 맞춰 기본값이 보정되어 있습니다.
+* 다시 calibration하는 상황이 아니면 `camera_y`, `camera_yaw`는 따로 넘기지 않습니다.
+* port가 다르면 `/dev/ttyACM0` 대신 실제 port를 넣어야 합니다.
 
 port 확인:
 
@@ -219,8 +209,8 @@ rqt
 
 `rqt`에서 `Plugins > Visualization > Image View`를 열고 아래 topic을 선택합니다.
 
-- `/camera/depth/image_raw`
-- `/vision/debug_image`
+* `/camera/depth/image_raw`
+* `/vision/debug_image`
 
 RViz에서는 `Vision Target` marker가 실제 물체 위치와 맞는지 확인합니다.
 
@@ -262,9 +252,9 @@ close_gripper_timeout_sec: 1.5
 
 조절 방법:
 
-- 더 약하게 잡고 싶으면 `close_gripper_joint_position_m` 값을 키웁니다.
-- 더 강하게 잡고 싶으면 `close_gripper_joint_position_m` 값을 줄입니다.
-- gripper close 후 기다리는 시간을 바꾸려면 `close_gripper_timeout_sec`를 수정합니다.
+* 더 약하게 잡고 싶으면 `close_gripper_joint_position_m` 값을 키웁니다.
+* 더 강하게 잡고 싶으면 `close_gripper_joint_position_m` 값을 줄입니다.
+* gripper close 후 기다리는 시간을 바꾸려면 `close_gripper_timeout_sec`를 수정합니다.
 
 ## 12. 물체를 잡은 뒤 들어 올리는 자세 조절
 
@@ -335,8 +325,8 @@ ros2 service call /pick_latest_target std_srvs/srv/Trigger {}
 
 ## Notes
 
-- 현재 object detection은 YOLO/classification 기반이 아니라 depth/shape 기반입니다.
-- 기본적으로 종이컵처럼 원기둥 형태의 물체를 잡는 것을 목표로 합니다.
-- OpenMANIPULATOR-X는 자유도가 제한적이기 때문에 strict orientation target을 쓰면 MoveIt planning이 실패할 수 있습니다.
-- 그래서 현재 grasp 동작은 arm에 대해 position-only target을 사용합니다.
-- 카메라 위치가 바뀌면 `camera_x`, `camera_y`, `camera_z`, `camera_yaw` calibration이 다시 필요합니다.
+* 현재 object detection은 YOLO/classification 기반이 아니라 depth/shape 기반입니다.
+* 기본적으로 종이컵처럼 원기둥 형태의 물체를 잡는 것을 목표로 합니다.
+* OpenMANIPULATOR-X는 자유도가 제한적이기 때문에 strict orientation target을 쓰면 MoveIt planning이 실패할 수 있습니다.
+* 그래서 현재 grasp 동작은 arm에 대해 position-only target을 사용합니다.
+* 카메라 위치가 바뀌면 `camera_x`, `camera_y`, `camera_z`, `camera_yaw` calibration이 다시 필요합니다.
