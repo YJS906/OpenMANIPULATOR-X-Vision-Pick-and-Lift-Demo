@@ -296,6 +296,7 @@ lift_height_m: 0.20
 
 ## 13. 자주 확인하는 명령어
 
+```bash
 cd ~/colcon_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
@@ -313,6 +314,8 @@ ros2 launch open_manipulator_vision_grasp dabai_vision_grasp.launch.py \
   execute_on_target:=false \
   camera_roll:=0.0 \
   camera_pitch:=0.0
+```
+
 
 카메라 depth topic 확인:
 
