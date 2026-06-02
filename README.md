@@ -296,23 +296,23 @@ lift_height_m: 0.20
 
 ## 13. 자주 확인하는 명령어
 
-node 확인:
+cd ~/colcon_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+source setup_orbbec_local_deps.bash
 
-```bash
-ros2 node list
-```
+colcon build --symlink-install --packages-select open_manipulator_vision_grasp
+source install/setup.bash
 
-topic 확인:
-
-```bash
-ros2 topic list
-```
-
-controller 확인:
-
-```bash
-ros2 control list_controllers
-```
+ros2 launch open_manipulator_vision_grasp dabai_vision_grasp.launch.py \
+  start_hardware:=true \
+  start_moveit:=true \
+  start_detector:=true \
+  start_grasp:=true \
+  port_name:=/dev/ttyACM0 \
+  execute_on_target:=false \
+  camera_roll:=0.0 \
+  camera_pitch:=0.0
 
 카메라 depth topic 확인:
 
