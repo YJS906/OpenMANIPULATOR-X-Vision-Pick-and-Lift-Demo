@@ -19,6 +19,7 @@ LIMO PRO 차량에 설치된 OpenMANIPULATOR-X
         DeclareLaunchArgument('camera_x', default_value='0.03'),
         DeclareLaunchArgument('camera_y', default_value='-0.105'),
         DeclareLaunchArgument('camera_z', default_value='-0.15'),  
+          close_gripper_joint_position_m: -0.0010 (가장 강하게 잡기) 
 ---
 
 ## 현재 동작 상태
